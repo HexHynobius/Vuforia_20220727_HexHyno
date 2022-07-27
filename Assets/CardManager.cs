@@ -1,19 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Vuforia;
 
 namespace Hyno.AR.Vuforia
 {
     public class CardManager : MonoBehaviour
     {
-        [SerializeField,Header("Hyno 圖片")]
+        [SerializeField, Header("Hyno 圖片")]
         private DefaultObserverEventHandler observerHyno;
+        [SerializeField, Header("UChan")]
+        private Animator aniUnityChan;
+        [SerializeField, Header("按鈕")]
+        private Button butAttack;
+        [SerializeField, Header("虛擬按鈕")]
+        private VirtualButtonBehaviour vbbAttack;
+        
+        private AudioSource audBGM;
+
+
+        private string parYa = "觸發";
+
+
+
+
 
         private void Awake()
         {
             observerHyno.OnTargetFound.AddListener(CardFounf);
-            observerHyno.OnTargetFound.AddListener(CardLost);
+            observerHyno.OnTargetLost.AddListener(CardLost);
+
+            butAttack.onClick.AddListener(Attack);
+
+            vbbAttack.RegisterOnButtonPressed(OnAttackPressed);
+
+            audBGM = GameObject.Find("BGM").GetComponent<AudioSource>();
         }
+
+        private void OnAttackPressed(VirtualButtonBehaviour obj)
+        {
+            print("<color=#3366dd>攻擊2</color>");
+        }
+
+
+
+
 
         /// <summary>
         /// 圖片辨識成功
@@ -21,6 +53,8 @@ namespace Hyno.AR.Vuforia
         private void CardFounf()
         {
             print("<color=yellow>找到卡片</color>");
+            aniUnityChan.SetTrigger(parYa);
+            audBGM.Play();
         }
 
         /// <summary>
@@ -29,6 +63,12 @@ namespace Hyno.AR.Vuforia
         private void CardLost()
         {
             print("<color=yellow>沒找到卡片</color>");
+            audBGM.Stop();
+        }
+
+        private void Attack()
+        {
+            print("<color=#9955aa>攻擊!!!</color>");
         }
     }
 }
