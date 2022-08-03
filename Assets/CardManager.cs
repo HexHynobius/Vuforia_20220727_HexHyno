@@ -8,19 +8,21 @@ namespace Hyno.AR.Vuforia
 {
     public class CardManager : MonoBehaviour
     {
-        [SerializeField, Header("Hyno ¹Ï¤ù")]
+        [SerializeField, Header("Hyno åœ–ç‰‡")]
         private DefaultObserverEventHandler observerHyno;
         [SerializeField, Header("UChan")]
         private Animator aniUnityChan;
-        [SerializeField, Header("«ö¶s")]
+        [SerializeField, Header("æŒ‰éˆ•")]
         private Button butAttack;
-        [SerializeField, Header("µêÀÀ«ö¶s")]
+        [SerializeField, Header("è™›æ“¬æŒ‰éˆ•")]
         private VirtualButtonBehaviour vbbAttack;
         
         private AudioSource audBGM;
 
 
-        private string parYa = "Ä²µo";
+        private string parYa = "è§¸ç™¼";
+        private string parAtt = "æ”»æ“Š";
+        private string parHapa = "æ‹æ‰‹";
 
 
 
@@ -33,14 +35,15 @@ namespace Hyno.AR.Vuforia
 
             butAttack.onClick.AddListener(Attack);
 
-            vbbAttack.RegisterOnButtonPressed(OnAttackPressed);
+            vbbAttack.RegisterOnButtonPressed(OnHapaPressed);
 
             audBGM = GameObject.Find("BGM").GetComponent<AudioSource>();
         }
 
-        private void OnAttackPressed(VirtualButtonBehaviour obj)
+        private void OnHapaPressed(VirtualButtonBehaviour obj)
         {
-            print("<color=#3366dd>§ğÀ»2</color>");
+            print("<color=#3366dd>æ‹æ‰‹</color>");
+            aniUnityChan.SetTrigger(parHapa);
         }
 
 
@@ -48,27 +51,28 @@ namespace Hyno.AR.Vuforia
 
 
         /// <summary>
-        /// ¹Ï¤ù¿ëÃÑ¦¨¥\
+        /// åœ–ç‰‡è¾¨è­˜æˆåŠŸ
         /// </summary>
         private void CardFounf()
         {
-            print("<color=yellow>§ä¨ì¥d¤ù</color>");
+            print("<color=yellow>æ‰¾åˆ°å¡ç‰‡</color>");
             aniUnityChan.SetTrigger(parYa);
             audBGM.Play();
         }
 
         /// <summary>
-        /// ¹Ï¤ù¿ëÃÑ¥¢±Ñ
+        /// åœ–ç‰‡è¾¨è­˜å¤±æ•—
         /// </summary>
         private void CardLost()
         {
-            print("<color=yellow>¨S§ä¨ì¥d¤ù</color>");
+            print("<color=yellow>æ²’æ‰¾åˆ°å¡ç‰‡</color>");
             audBGM.Stop();
         }
 
         private void Attack()
         {
-            print("<color=#9955aa>§ğÀ»!!!</color>");
+            print("<color=#9955aa>æ”»æ“Š!!!</color>");
+            aniUnityChan.SetTrigger(parAtt);
         }
     }
 }
